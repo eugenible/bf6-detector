@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: bf6.detector
+
+  jpa:
+
+app:
+  name: "@project.name@"
+  version: "@project.version@"
+  java-version: "@java.version@"
