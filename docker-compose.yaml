@@ -16,18 +16,37 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
 
   kafka:
     image: confluentinc/cp-kafka:7.5.0
+    container_name: bf6-tracker-kafka
     depends_on:
       - zookeeper
     ports:
-      - "9092:9092" # Exposed to your localhost
+      - "9092:9092"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      # Enables Kafka to accept connections inside Docker (29092) AND from localhost (9092)
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092
+
+      # Your tour guide settings now have ports to point to:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: bf6-tracker-kafka-ui
+    depends_on:
+      - kafka
+    ports:
+      - "8082:8080" # Maps your browser port 8080 -> UI container port 8080
+    environment:
+      # Name displayed in the UI dashboard
+      DYNAMIC_CONFIG_ENABLED: 'true'
+      KAFKA_CLUSTERS_0_NAME: local-bf6-cluster
+      # Inside Docker network, UI talks to Kafka using the internal container address
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092

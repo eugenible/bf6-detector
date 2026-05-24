@@ -33,9 +33,6 @@ public class GameEventOutbox {
     @Column(name = "processed")
     private boolean processed;
 
-    @Column(name = "attempts")
-    private int attempts;
-
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
 

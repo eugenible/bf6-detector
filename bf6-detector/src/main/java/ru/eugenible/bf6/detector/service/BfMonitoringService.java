@@ -62,7 +62,6 @@ public class BfMonitoringService {
 
         event.setStatus(status);
         event.setProcessed(false);
-        event.setAttempts(0);
         event.setCreatedAt(OffsetDateTime.now());
 
         gameStartedOutboxRepo.save(event);

@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: bf6-notifier
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      # Unique identifier for your tracker app instance
+      group-id: bf6-detector-group
+      # Automatically starts reading from the oldest message if no offset exists
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+app:
+  name: "@project.name@"
+  version: "@project.version@"
+  java-version: "@java.version@"
+
+secret:
+  bot:
+    token: ${SECRET_BOT_TOKEN}

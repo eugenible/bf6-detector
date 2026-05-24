@@ -5,12 +5,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
 @EnableJpaRepositories
-public class Application implements CommandLineRunner {
+@EnableKafka
+public class DetectorApplication implements CommandLineRunner {
 
     @Value("${app.name}")
     private String applicationName;
@@ -22,7 +24,7 @@ public class Application implements CommandLineRunner {
     private String javaVersion;
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(DetectorApplication.class, args);
     }
 
     @Override

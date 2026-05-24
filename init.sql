@@ -6,7 +6,6 @@ CREATE TABLE bf6_detector_schema.game_event_outbox
     id         UUID PRIMARY KEY,
     status     TEXT NULL,
     processed  BOOLEAN      DEFAULT FALSE,
-    attempts   INT NOT NULL DEFAULT 0,
     created_at TIMESTAMPTZ
 );
 

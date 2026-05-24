@@ -12,7 +12,7 @@ public interface GameStartedOutboxRepo extends JpaRepository<GameEventOutbox, UU
     @Query("""
             SELECT o
             FROM GameEventOutbox o
-            WHERE o.processed = false AND o.attempts < 10
+            WHERE o.processed = false
             ORDER BY o.createdAt ASC
             """)
     List<GameEventOutbox> findPendingMessagesToProcess();
